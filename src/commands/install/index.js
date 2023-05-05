@@ -59,6 +59,7 @@ const getFeaturesToInstall = async _ => {
       return acc
     }, [])
 
+  // TODO find why it's bugged and checkbox won't show
   const { features: featuresUidsToInstall } = await inquirer
     .prompt([
       {
