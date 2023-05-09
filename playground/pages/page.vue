@@ -6,6 +6,4 @@
 </template>
 
 <script setup>
-const { busTransition } = useTransition()
-definePageMeta(useTransition())
 </script>

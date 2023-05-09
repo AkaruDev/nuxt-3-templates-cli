@@ -35,3 +35,20 @@ By default, `install` command is looking for features in `AkaruDev/nuxt-3-templa
 
 `install` command requires to temporary store files to work. Pass an other directory name (relative to root directory) if `tmp` directory is already used for something else.
 
+### Get config
+
+Utils for copying in your `nuxt.config.ts` the extendeds files needed for the module(s).
+
+```Exemple:
+export default defineNuxtConfig({
+    extends:[
+        './configs/page-transitions',
+        './configs/virtual-scroll'
+    ]
+})```
+
+
+
+```bash
+nuxt-templates get-config
+```

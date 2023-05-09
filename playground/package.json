@@ -4,7 +4,8 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "cli": "node ../bin/index.js install",
+    "cli:install": "node ../bin/index.js install",
+    "cli:config": "node ../bin/index.js get-config",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
