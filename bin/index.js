@@ -3,11 +3,9 @@
 const Cli = require('../src/cli.js')
 const Log = require('../src/Log.js')
 
-// TODO check if git has unstaged files, abort and warn thanks XOXO
-
 // Commands
 const install = require('../src/commands/install/index.js')
-const config = require('../src/commands/get-config/index.js')
+const getConfig = require('../src/commands/get-config/index.js')
 
 Log.blankLine()
 
@@ -29,7 +27,8 @@ if (!Cli.command || Cli.arguments.help) {
 // Install features
 if (Cli.command === Cli.INSTALL_COMMAND) {
   process.on('exit', install.clean)
-
+  // TODO check if git has unstaged files, abort and warn thanks XOXO https://makerkit.dev/snippets/staged-git-files-nodejs
+  // TODO check if token limit error then log link to documentation
   install
     .run(Cli.arguments)
     .catch(error => {
@@ -38,7 +37,7 @@ if (Cli.command === Cli.INSTALL_COMMAND) {
 }
 
 if (Cli.command === Cli.CONFIG_COMMAND) {
-  config
+  getConfig
     .run(Cli.arguments)
     .catch(error => {
       if (error) console.error('Error:', error)

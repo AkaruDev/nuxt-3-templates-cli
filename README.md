@@ -52,3 +52,7 @@ export default defineNuxtConfig({
 ```bash
 nuxt-templates get-config
 ```
+
+<!--
+TODO explain playground purpose
+-->
