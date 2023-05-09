@@ -1,4 +1,3 @@
-const inquirer = require('inquirer')
 const c = require('ansi-colors')
 
 const { getFeatures } = require('./Github.js')
@@ -14,7 +13,8 @@ const Log = require('../../Log.js')
  *
  * @returns {Array} Array of features objects selected by user
  */
-const getFeaturesToInstall = async _ => {
+const getFeaturesToInstall = async () => {
+  const inquirer = (await import('inquirer')).default
   const availableFeatures = await getFeatures()
 
   const longestFeatureTitle = availableFeatures
@@ -28,14 +28,14 @@ const getFeaturesToInstall = async _ => {
   let choices = availableFeatures
     .reduce((acc, feature) => {
       feature.metas.category = feature.metas.category || 'Other'
-
+      console.info(feature)
       const categoryKey = feature.metas.category
         .toLowerCase()
         .replace(/\//g, '')
         .replace(/\s+/g, '_')
 
       const choice = {
-        name: (`${feature.metas.title.padEnd(longestFeatureTitle + 10, ' ')} ${feature.metas?.description}`).slice(0, 10),
+        name: (`${feature.metas.title.padEnd(longestFeatureTitle, ' - ')} ${feature.metas?.description}`),
         value: feature.uid,
         short: feature.metas.title,
         checked: false
@@ -59,14 +59,22 @@ const getFeaturesToInstall = async _ => {
       return acc
     }, [])
 
-  // TODO find why it's bugged and checkbox won't show
+  // FIX for weird display of checkbox
+  // TODO check when choices list is longer if bug still exist
+  choices.forEach(() => {
+    choices.push({
+      type: 'separator',
+      line: '\x1B[2m\x1B[22m\n\x1B[2m\x1B[97m\x1B[1m\x1B[4m\x1B[24m\x1B[22m\x1B[2m\x1B[39m\x1B[22m\n\x1B[2m\x1B[22m'
+    })
+  })
+
   const { features: featuresUidsToInstall } = await inquirer
     .prompt([
       {
         type: 'checkbox',
         name: 'features',
         message: 'Select features',
-        choices,
+        choices: choices,
         pageSize: choices.length,
         loop: false
       }
