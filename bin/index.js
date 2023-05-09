@@ -3,6 +3,8 @@
 const Cli = require('../src/cli.js')
 const Log = require('../src/Log.js')
 
+// TODO check if git has unstaged files, abort and warn thanks XOXO
+
 // Commands
 const install = require('../src/commands/install/index.js')
 const config = require('../src/commands/get-config/index.js')
