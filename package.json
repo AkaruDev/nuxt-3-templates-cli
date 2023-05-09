@@ -1,23 +1,31 @@
 {
   "name": "nuxt-3-templates-cli",
-  "version": "1.0.11",
+  "version": "0.0.0",
   "license": "ISC",
-  "description": "Command line utility to add configurations and features templates to Nuxt projects",
+  "description": "Command line utility to add configurations and features templates to Nuxt 3 projects",
   "keywords": [],
   "author": {
-    "name": "Quentin Neyraud",
-    "email": "quentin.neyraud@gmail.com"
+    "name": "Akaru",
+    "email": "dev@akaru.fr"
   },
   "maintainers": [
     {
       "name": "Quentin Neyraud",
-      "email": "quentin.neyraud@gmail.com"
+      "email": "quentin@akaru.fr"
+    },
+    {
+      "name": "Adrien Feletti",
+      "email": "adrien@akaru.fr"
     }
   ],
   "contributors": [
     {
       "name": "Quentin Neyraud",
-      "email": "quentin.neyraud@gmail.com"
+      "email": "quentin@akaru.fr"
+    },
+    {
+      "name": "Adrien Feletti",
+      "email": "adrien@akaru.fr"
     }
   ],
   "main": "bin/index.js",
