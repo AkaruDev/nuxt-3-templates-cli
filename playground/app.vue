@@ -1,10 +1,12 @@
 <template>
-  <main>
-    <h1>Nuxt 3 templates CLI</h1>
-    <div>Playground</div>
-  </main>
+  <div>
+    <PageLoader/>
+    <PageTransition/>
+    <div>
+      <NuxtPage/>
+    </div>
+  </div>
 </template>
-
 
 <style >
 * {
