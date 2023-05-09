@@ -35,7 +35,7 @@ const getFeaturesToInstall = async _ => {
         .replace(/\s+/g, '_')
 
       const choice = {
-        name: `${feature.metas.title.padEnd(longestFeatureTitle + 10, ' ')} ${feature.metas?.description}`,
+        name: (`${feature.metas.title.padEnd(longestFeatureTitle + 10, ' ')} ${feature.metas?.description}`).slice(0, 10),
         value: feature.uid,
         short: feature.metas.title,
         checked: false
