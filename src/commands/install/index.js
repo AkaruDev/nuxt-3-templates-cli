@@ -28,7 +28,6 @@ const getFeaturesToInstall = async () => {
   let choices = availableFeatures
     .reduce((acc, feature) => {
       feature.metas.category = feature.metas.category || 'Other'
-      console.info(feature)
       const categoryKey = feature.metas.category
         .toLowerCase()
         .replace(/\//g, '')

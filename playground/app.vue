@@ -1,7 +1,5 @@
 <template>
   <div>
-    <PageLoader/>
-    <PageTransition/>
     <div>
       <NuxtPage/>
     </div>
