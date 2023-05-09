@@ -31,7 +31,7 @@
   "main": "bin/index.js",
   "files": [
     "bin/*",
-    "src/*"
+    "src/**/*"
   ],
   "bin": {
     "nuxt-3-templates": "bin/index.js"
