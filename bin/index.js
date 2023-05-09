@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-const Cli = require('./src/cli.js')
-const Log = require('./src/Log.js')
+const Cli = require('../src/cli.js')
+const Log = require('../src/Log.js')
 
 // Commands
-const install = require('./src/commands/install/index.js')
+const install = require('../src/commands/install/index.js')
 const config = require('../src/commands/get-config/index.js')
 
 Log.blankLine()
