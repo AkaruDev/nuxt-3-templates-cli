@@ -1,3 +1,5 @@
+const { execSync } = require('child_process')
+
 const fs = require('fs')
 const path = require('path')
 
@@ -21,9 +23,18 @@ const removeDuplicates = arr => Array.from(new Set(arr))
 
 const mergeArrays = arrays => [].concat(...arrays)
 
+const getChangedFiles = extension => {
+  const extensionFilter = extension ? `-- '***.${extension}'` : ''
+  const command = `git diff HEAD --name-only ${extensionFilter}`
+  const diffOutput = execSync(command)
+
+  return diffOutput.toString().split('\n').filter(Boolean)
+}
+
 module.exports = {
   isNuxtDir,
   removeDirectory,
   removeDuplicates,
+  getChangedFiles,
   mergeArrays
 }
