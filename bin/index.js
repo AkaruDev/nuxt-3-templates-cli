@@ -32,10 +32,10 @@ if (Cli.command === Cli.INSTALL_COMMAND) {
   // Check if git has unstaged files, abort and warn
   const changedFiles = getChangedFiles() || []
   if (Array.isArray(changedFiles) && changedFiles.length > 0) {
-    throw String('You have uncommited changes. Save them before install.')
+    const errorMessage = 'You have uncommited changes. Save them before install.'
+    throw errorMessage
   }
 
-  // TODO check if token limit error then log link to documentation
   install
     .run(Cli.arguments)
     .then(() => {

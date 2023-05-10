@@ -8,6 +8,23 @@ let ghrepo
 const getRepo = () => {
   if (!ghrepo) {
     const client = github.client(Config.token)
+
+    client.limit((err, left, max, reset) => {
+      console.info(err)
+      console.info(left) // 4999
+      console.info(max) // 5000
+      console.info(reset) // 1372700873 (UTC epoch seconds)
+
+      if (err) {
+        console.warn(err)
+      }
+
+      if (left === 0) {
+        console.info('You have reached the limit for the github api call.')
+        console.info('You can set a token to bypass it.')
+        console.info('https://github.com/AkaruDev/nuxt-3-templates-cli#arguments')
+      }
+    })
     ghrepo = client.repo(Config.repository)
   }
 
