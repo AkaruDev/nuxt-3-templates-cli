@@ -31,7 +31,7 @@ if (Cli.command === Cli.INSTALL_COMMAND) {
 
   // Check if git has unstaged files, abort and warn
   const changedFiles = getChangedFiles() || []
-  if (Array.isArray(changedFiles) && changedFiles.length >= 0) {
+  if (Array.isArray(changedFiles) && changedFiles.length > 0) {
     throw String('You have uncommited changes. Save them before install.')
   }
 
