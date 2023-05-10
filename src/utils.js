@@ -11,8 +11,10 @@ const isNuxtDir = rootDirectory => {
   return false
 }
 
-const removeDirectory = async directoryPath => {
-  await fs.rmSync(directoryPath, { recursive: true })
+const removeDirectory = directoryPath => {
+  if (fs.existsSync(directoryPath)) {
+    fs.rmSync(directoryPath, { recursive: true })
+  }
 }
 
 const removeDuplicates = arr => Array.from(new Set(arr))

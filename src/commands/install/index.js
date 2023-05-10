@@ -107,7 +107,7 @@ const run = async cliArgs => {
   Log.success('🎉 All features are installed')
 }
 
-const clean = _ => {
+const clean = () => {
   removeDirectory(Config.tmpDirectory)
 }
 

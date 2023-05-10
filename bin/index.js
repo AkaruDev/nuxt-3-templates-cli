@@ -31,9 +31,20 @@ if (Cli.command === Cli.INSTALL_COMMAND) {
   // TODO check if token limit error then log link to documentation
   install
     .run(Cli.arguments)
+    .then(() => {
+      Log.blankLine()
+      Log.log('Just one more step!')
+      getConfig
+        .run(Cli.arguments)
+        .catch(error => {
+          if (error) console.error('Error:', error)
+        })
+    })
     .catch(error => {
       if (error) console.error('Error:', error)
     })
+
+  /* */
 }
 
 if (Cli.command === Cli.CONFIG_COMMAND) {
