@@ -39,20 +39,19 @@ By default, `install` command is looking for features in `AkaruDev/nuxt-3-templa
 
 Utils for copying in your `nuxt.config.ts` the extendeds files needed for the module(s).
 
-```Exemple:
+```bash
+nuxt-templates get-config
+```
+
+Exemple:
+```bash
 export default defineNuxtConfig({
     extends:[
         './configs/page-transitions',
         './configs/virtual-scroll'
     ]
-})```
-
-
-
-```bash
-nuxt-templates get-config
+})
 ```
 
-<!--
-TODO explain playground purpose
--->
+## Testing
+You have a minimalist Nuxt 3 environment in `/playground` to test/debug the commands.
