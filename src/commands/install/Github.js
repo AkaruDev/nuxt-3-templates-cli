@@ -9,12 +9,7 @@ const getRepo = () => {
   if (!ghrepo) {
     const client = github.client(Config.token)
 
-    client.limit((err, left, max, reset) => {
-      console.info(err)
-      console.info(left) // 4999
-      console.info(max) // 5000
-      console.info(reset) // 1372700873 (UTC epoch seconds)
-
+    client.limit((err, left) => {
       if (err) {
         console.warn(err)
       }
