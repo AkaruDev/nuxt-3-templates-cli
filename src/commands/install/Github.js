@@ -37,7 +37,7 @@ const getFeaturesBranchesNames = async _ => {
   })
 
   return branches
-    .filter(({ name }) => name.includes('features'))
+    .filter(({ name }) => name.includes('features/'))
     .map(({ name }) => name)
 }
 
