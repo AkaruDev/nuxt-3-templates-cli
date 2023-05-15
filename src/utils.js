@@ -24,6 +24,8 @@ const removeDuplicates = arr => Array.from(new Set(arr))
 const mergeArrays = arrays => [].concat(...arrays)
 
 const getChangedFiles = extension => {
+  if (!fs.existsSync(path.join(process.cwd(), '.git'))) return []
+
   const extensionFilter = extension ? `-- '***.${extension}'` : ''
   const command = `git diff HEAD --name-only ${extensionFilter}`
   const diffOutput = execSync(command)
