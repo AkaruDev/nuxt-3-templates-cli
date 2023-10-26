@@ -39,6 +39,8 @@ const getFeaturesBranchesNames = async _ => {
 const getFeatures = async _ => {
   const branchesNames = await getFeaturesBranchesNames()
 
+  console.info(branchesNames)
+
   const promises = branchesNames
     .map(async branchName => {
       try {

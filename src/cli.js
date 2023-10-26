@@ -82,18 +82,18 @@ const Cli = {
   logHelp () {
     Log.log(`${c.bold.underline('Nuxt templates CLI')}
 
-${c.bold('Commands')}:
-    ${INSTALL_COMMAND}: Install one or more features
+    ${c.bold('Commands')}:
+        ${INSTALL_COMMAND}: Install one or more features
 
-${c.bold('Arguments')}:
-    ${HELP_ARGUMENT} | ${HELP_ARGUMENT_ALIAS}: Display this help
-    ${INSTALL_TOKEN_ARGUMENT}: Create a token (https://github.com/settings/tokens) to extend API limit
-    ${INSTALL_REPOSITORY_ARGUMENT}: Github repository name (default: AkaruDev/nuxt-3-templates)
-    ${INSTALL_TMP_DIRECTORY_ARGUMENT}: Temporary directory to download files, use an empty directory (default: ./tmp)
+    ${c.bold('Arguments')}:
+        ${HELP_ARGUMENT} | ${HELP_ARGUMENT_ALIAS}: Display this help
+        ${INSTALL_TOKEN_ARGUMENT}: Create a token (https://github.com/settings/tokens) to extend API limit
+        ${INSTALL_REPOSITORY_ARGUMENT}: Github repository name (default: AkaruDev/nuxt-3-templates)
+        ${INSTALL_TMP_DIRECTORY_ARGUMENT}: Temporary directory to download files, use an empty directory (default: ./tmp)
 
-${c.bold('Examples')}:
-    nuxt-3-templates ${INSTALL_COMMAND} ${INSTALL_TOKEN_ARGUMENT} abc123
-`)
+    ${c.bold('Examples')}:
+        nuxt-3-templates ${INSTALL_COMMAND} ${INSTALL_TOKEN_ARGUMENT} abc123
+    `)
   },
 
   logVersion () {
