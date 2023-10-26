@@ -64,7 +64,8 @@ const getFeatures = async _ => {
           files,
           postInstall
         }
-      } catch (_) {
+      } catch (error) {
+        console.warn(error)
         return null
       }
     })
