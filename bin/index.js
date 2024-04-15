@@ -2,7 +2,7 @@
 
 const Cli = require('../src/cli.js')
 const Log = require('../src/Log.js')
-const { getChangedFiles } = require('../src/utils.js')
+// const { getChangedFiles } = require('../src/utils.js')
 
 // Commands
 const install = require('../src/commands/install/index.js')
@@ -30,11 +30,13 @@ if (Cli.command === Cli.INSTALL_COMMAND) {
   process.on('exit', install.clean)
 
   // Check if git has unstaged files, abort and warn
+  /*
   const changedFiles = getChangedFiles() || []
   if (Array.isArray(changedFiles) && changedFiles.length > 0) {
     const errorMessage = 'You have uncommited changes. Save them before install.'
     throw errorMessage
   }
+  */
 
   install
     .run(Cli.arguments)
