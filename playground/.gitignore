@@ -9,3 +9,10 @@ dist
 .DS_Store
 modules
 configs
+app
+api
+plugins
+public
+.npmrc
+.yarnrc
+assets
