@@ -1,6 +1,8 @@
-const lmify = require('lmify')
-const { removeDuplicates } = require('../../utils.js')
-const Log = require('../../Log.js')
+import lmify from 'lmify'
+const install = lmify.install
+import utils from '../../utils.js'
+const { removeDuplicates } = utils
+import Log from '../../Log.js'
 
 const DependenciesInstaller = {
   dependencies: [],
@@ -23,7 +25,7 @@ const DependenciesInstaller = {
     Log.log(this.dependencies.join(', '))
     Log.blankLine()
 
-    await lmify.install(this.dependencies)
+    await install(this.dependencies)
 
     Log.blankLine()
   },
@@ -33,7 +35,7 @@ const DependenciesInstaller = {
     Log.log(this.devDependencies.join(', '))
     Log.blankLine()
 
-    await lmify.install(['-D', ...this.devDependencies])
+    await install(['-D', ...this.devDependencies])
 
     Log.blankLine()
   },
@@ -55,4 +57,4 @@ const DependenciesInstaller = {
   }
 }
 
-module.exports = DependenciesInstaller
+export default DependenciesInstaller

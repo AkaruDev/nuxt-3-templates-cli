@@ -1,11 +1,12 @@
-const c = require('ansi-colors')
+import colors from 'ansi-colors'
 
-const { getFeatures } = require('./Github.js')
-const { install } = require('./Installer.js')
-const DependenciesInstaller = require('./DependenciesInstaller.js')
-const Config = require('./Config.js')
-const { removeDirectory, isNuxtDir } = require('../../utils.js')
-const Log = require('../../Log.js')
+import Github from './Github.js'
+import Installer from './Installer.js'
+import DependenciesInstaller from './DependenciesInstaller.js'
+import Config from './Config.js'
+import _default from '../../utils.js'
+const { removeDirectory, isNuxtDir } = _default
+import Log from '../../Log.js'
 
 /**
  * Get all available features from Github repo,
@@ -15,7 +16,7 @@ const Log = require('../../Log.js')
  */
 const getFeaturesToInstall = async () => {
   const inquirer = (await import('inquirer')).default
-  const availableFeatures = await getFeatures()
+  const availableFeatures = await Github.getFeatures()
 
   const longestFeatureTitle = availableFeatures
     .reduce((currentLongestFeatureTitle, feature) => {
@@ -40,7 +41,7 @@ const getFeaturesToInstall = async () => {
         checked: false
       }
 
-      const title = new inquirer.Separator(`\n${c.whiteBright.bold.underline(feature.metas.category)}\n`)
+      const title = new inquirer.Separator(`\n${colors.whiteBright.bold.underline(feature.metas.category)}\n`)
 
       acc[categoryKey] = {
         title,
@@ -95,7 +96,7 @@ const run = async cliArgs => {
   Log.blankLine()
 
   for (const featureToInstallIndex in featuresToInstall) {
-    await install(featuresToInstall[featureToInstallIndex], parseInt(featureToInstallIndex))
+    await Installer.install(featuresToInstall[featureToInstallIndex], parseInt(featureToInstallIndex))
   }
 
   Log.blankLine()
@@ -111,7 +112,7 @@ const clean = () => {
   removeDirectory(Config.tmpDirectory)
 }
 
-module.exports = {
+export default {
   run,
   clean
 }

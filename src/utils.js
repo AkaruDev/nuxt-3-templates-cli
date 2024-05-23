@@ -1,13 +1,13 @@
-const { execSync } = require('child_process')
+import { execSync } from 'child_process'
 
-const fs = require('fs')
-const path = require('path')
+import fs from "fs"
+import { join } from 'path'
 
 // https://github.com/nuxt/nuxt.js/blob/dev/packages/cli/src/utils/dir.js
 const isNuxtDir = rootDirectory => {
-  if (fs.existsSync(path.join(rootDirectory, 'nuxt.config.js')) ||
-    fs.existsSync(path.join(rootDirectory, 'pages')) ||
-    fs.existsSync(path.join(rootDirectory, 'nuxt.config.ts'))) {
+  if (fs.existsSync(join(rootDirectory, 'nuxt.config.js')) ||
+    fs.existsSync(join(rootDirectory, 'pages')) ||
+    fs.existsSync(join(rootDirectory, 'nuxt.config.ts'))) {
     return true
   }
   return false
@@ -24,7 +24,7 @@ const removeDuplicates = arr => Array.from(new Set(arr))
 const mergeArrays = arrays => [].concat(...arrays)
 
 const getChangedFiles = extension => {
-  if (!fs.existsSync(path.join(process.cwd(), '.git'))) return []
+  if (!fs.existsSync(join(process.cwd(), '.git'))) return []
 
   const extensionFilter = extension ? `-- '***.${extension}'` : ''
   const command = `git diff HEAD --name-only ${extensionFilter}`
@@ -33,7 +33,7 @@ const getChangedFiles = extension => {
   return diffOutput.toString().split('\n').filter(Boolean)
 }
 
-module.exports = {
+export default {
   isNuxtDir,
   removeDirectory,
   removeDuplicates,

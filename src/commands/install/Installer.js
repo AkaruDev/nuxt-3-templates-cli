@@ -1,12 +1,14 @@
-const { execSync } = require('child_process')
-const path = require('path')
-const download = require('download')
-const colors = require('ansi-colors')
-const cliProgress = require('cli-progress')
-const Log = require('../../Log.js')
-const DependenciesInstaller = require('./DependenciesInstaller.js')
-const { recursivelyGetDirectoryContent, getDirectoryContent } = require('./Github.js')
-const { mergeArrays } = require('../../utils.js')
+import { execSync } from 'child_process'
+import { basename } from 'path'
+import download from 'download'
+import colors from 'ansi-colors'
+const { cyan } = colors
+import { SingleBar, Presets } from 'cli-progress'
+import Log from '../../Log.js'
+import DependenciesInstaller from './DependenciesInstaller.js'
+import Github from './Github.js'
+const { recursivelyGetDirectoryContent, getDirectoryContent } = Github
+import utils from '../../utils.js'
 
 const install = async ({ uid, metas, branchName, dependencies, devDependencies, installCommands, files, postInstall } = {}, index) => {
   const fileDownloadsPromises = []
@@ -26,20 +28,20 @@ const install = async ({ uid, metas, branchName, dependencies, devDependencies, 
    * Files
    *
    */
-  const progressBar = new cliProgress.SingleBar({
-    format: `${colors.cyan('{bar}')} {percentage}% ({value}/{total})`
-  }, cliProgress.Presets.shades_classic)
+  const progressBar = new SingleBar({
+    format: `${cyan('{bar}')} {percentage}% ({value}/{total})`
+  }, Presets.shades_classic)
 
   if (files) {
     // Glob all files
     const allFilesPromises = files.map(file => recursivelyGetDirectoryContent(file, branchName))
     let allFiles = await Promise.all(allFilesPromises)
-    allFiles = mergeArrays(allFiles)
+    allFiles = utils.mergeArrays(allFiles)
 
     // Store download promises
-    fileDownloadsPromises.push(...allFiles.map(file => async _ => {
+    fileDownloadsPromises.push(...allFiles.map(file => async () => {
       await download(file.downloadUrl, file.pathDirectory, {
-        filename: path.basename(file.downloadUrl)
+        filename: basename(file.downloadUrl)
       })
       progressBar.increment()
     }))
@@ -53,7 +55,7 @@ const install = async ({ uid, metas, branchName, dependencies, devDependencies, 
   const configFile = (await getDirectoryContent('config.js', branchName))?.[0]
 
   if (configFile) {
-    fileDownloadsPromises.push(async _ => {
+    fileDownloadsPromises.push(async () => {
       await download(configFile.downloadUrl, 'configs', {
         filename: `nuxt.config.${uid}.js`
       })
@@ -103,6 +105,6 @@ const install = async ({ uid, metas, branchName, dependencies, devDependencies, 
   Log.separator()
 }
 
-module.exports = {
+export default {
   install
 }

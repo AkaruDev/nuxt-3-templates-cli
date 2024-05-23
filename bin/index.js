@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
-const Cli = require('../src/cli.js')
-const Log = require('../src/Log.js')
+import Cli from '../src/cli.js'
+import Log from '../src/Log.js'
 // const { getChangedFiles } = require('../src/utils.js')
 
 // Commands
-const install = require('../src/commands/install/index.js')
-const getConfig = require('../src/commands/get-config/index.js')
+import Install from '../src/commands/install/index.js'
+import GetConfig from '../src/commands/get-config/index.js'
 
 Log.blankLine()
 
@@ -14,20 +14,20 @@ Log.blankLine()
 Cli.parse()
 
 // Version argument
-if (Cli.arguments.version) {
+if (Cli.options.version) {
   Cli.logVersion()
   process.exit(0)
 }
 
 // No command or help argument
-if (!Cli.command || Cli.arguments.help) {
+if (!Cli.command || Cli.options.help) {
   Cli.logHelp()
   process.exit(0)
 }
 
 // Install features
 if (Cli.command === Cli.INSTALL_COMMAND) {
-  process.on('exit', install.clean)
+  process.on('exit', Install.clean)
 
   // Check if git has unstaged files, abort and warn
   /*
@@ -38,13 +38,11 @@ if (Cli.command === Cli.INSTALL_COMMAND) {
   }
   */
 
-  install
-    .run(Cli.arguments)
+  Install.run(Cli.options)
     .then(() => {
       Log.blankLine()
       Log.log('Just one more step!')
-      getConfig
-        .run(Cli.arguments)
+      GetConfig.run(Cli.options)
         .catch(error => {
           if (error) console.error('Error:', error)
         })
@@ -57,8 +55,7 @@ if (Cli.command === Cli.INSTALL_COMMAND) {
 }
 
 if (Cli.command === Cli.CONFIG_COMMAND) {
-  getConfig
-    .run(Cli.arguments)
+  GetConfig.run(Cli.options)
     .catch(error => {
       if (error) console.error('Error:', error)
     })

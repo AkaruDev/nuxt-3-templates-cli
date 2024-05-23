@@ -1,4 +1,4 @@
-const path = require('path')
+import { resolve } from 'path'
 
 const Config = {
   rootDirectory: process.cwd(),
@@ -14,8 +14,9 @@ const Config = {
     this.repository = repository || this.repository
 
     this.tmpDirectory = tmpDirectory || this.tmpDirectory
-    this.tmpDirectory = path.resolve(this.rootDirectory, this.tmpDirectory)
+    this.tmpDirectory = resolve(this.rootDirectory, this.tmpDirectory)
+    console.info(this.tmpDirectory)
   }
 }
 
-module.exports = Config
+export default Config

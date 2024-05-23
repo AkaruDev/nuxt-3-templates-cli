@@ -1,55 +1,47 @@
-const { parse: pathParse, resolve: pathResolve } = require('path')
-const github = require('octonode')
-const download = require('download')
-const Config = require('./Config')
+import { parse as pathParse, resolve as pathResolve } from 'path'
+import download from 'download'
+import Config from './Config.js'
+import { Octokit } from "octokit";
 
-let ghrepo
+const owner = 'AkaruDev'
+const repo = 'nuxt-3-templates'
 
-const getRepo = () => {
-  if (!ghrepo) {
-    const client = github.client(Config.token)
 
-    client.limit((err, left) => {
-      if (err) {
-        console.warn(err)
-      }
-
-      if (left === 0) {
-        console.info('You have reached the limit for the github api call.')
-        console.info('You can set a token to bypass it.')
-        console.info('https://github.com/AkaruDev/nuxt-3-templates-cli#arguments')
-      }
-    })
-    ghrepo = client.repo(Config.repository)
-  }
-
-  return ghrepo
-}
-
-const getFeaturesBranchesNames = async _ => {
-  const [branches] = await getRepo().branchesAsync({
-    per_page: 100
+const getFeaturesBranchesNames = async (octokit) => {
+  const branches = await octokit.request(`GET /repos/${owner}/${repo}/branches?per_page=100`, {
+    owner: 'OWNER',
+    repo: 'REPO',
+    headers: {
+      'X-GitHub-Api-Version': '2022-11-28'
+    }
   })
 
-  return branches
-    .filter(({ name }) => name.includes('features/'))
+  return branches.data.filter(({ name }) => name.includes('features/'))
     .map(({ name }) => name)
 }
 
-const getFeatures = async _ => {
-  const branchesNames = await getFeaturesBranchesNames()
+const getFeatures = async () => {
+  const octokit = new Octokit({ auth: Config.token });
+  const branchesNames = await getFeaturesBranchesNames(octokit)
 
   const promises = branchesNames
     .map(async branchName => {
       try {
-        const uid = branchName.replace('features/', '')
-        const [installationFile] = await getRepo().contentsAsync('nuxt-templates-cli.js', branchName)
+        const uid = branchName.replace("features/", "")
+        const path = 'nuxt-templates-cli.js'
+        const installationFile = await octokit.request(`GET /repos/${owner}/${repo}/contents/${path}?ref=${branchName}`, {
+          owner: 'OWNER',
+          repo: 'REPO',
+          path: 'PATH',
+          headers: {
+            'X-GitHub-Api-Version': '2022-11-28'
+          }
+        })
 
         const featureTmpDirectory = pathResolve(Config.tmpDirectory, uid)
-
-        await download(installationFile.download_url, featureTmpDirectory)
-
-        const { metas, dependencies, devDependencies, installCommands, files, postInstall } = require(`${featureTmpDirectory}/nuxt-templates-cli.js`)
+        await download(installationFile.data.download_url, featureTmpDirectory)
+        const filePath = `file:///${featureTmpDirectory}/nuxt-templates-cli.js`
+        const { metas, dependencies, devDependencies, installCommands, files, postInstall } = await import(filePath)
 
         if (!metas?.title || typeof metas.title !== 'string') return null
 
@@ -75,6 +67,7 @@ const getFeatures = async _ => {
 }
 
 const getDirectoryContent = async (directoryPath, branchName = 'master') => {
+  console.info(directoryPath)
   const parseFileOrDir = fileOrDir => {
     const { name, download_url: downloadUrl, type, path } = fileOrDir
 
@@ -91,13 +84,20 @@ const getDirectoryContent = async (directoryPath, branchName = 'master') => {
   }
 
   try {
-    const [directoryContents] = await getRepo().contentsAsync(directoryPath, branchName)
+    const contents = await octokit.request(`GET /repos/${owner}/${repo}/contents/${directoryPath}?ref=${branchName}`, {
+      owner: 'OWNER',
+      repo: 'REPO',
+      path: 'PATH',
+      headers: {
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    })
 
-    if (!Array.isArray(directoryContents)) {
-      return [parseFileOrDir(directoryContents)]
+    if (!Array.isArray(contents.data)) {
+      return [parseFileOrDir(contents.data)]
     }
 
-    return directoryContents
+    return contents.data
       .map(parseFileOrDir)
   } catch (_) {
     return null
@@ -124,7 +124,7 @@ const recursivelyGetDirectoryContent = async (directoryPath, branchName, acc = [
   return acc
 }
 
-module.exports = {
+export default {
   getFeatures,
   getDirectoryContent,
   recursivelyGetDirectoryContent

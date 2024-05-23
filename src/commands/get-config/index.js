@@ -1,12 +1,12 @@
-const fs = require('fs')
+import fs from "fs"
 
-const path = require('path')
-const c = require('ansi-colors')
-const Log = require('../../Log')
+import { resolve } from 'path'
+import colors from 'ansi-colors'
+import Log from '../../Log.js'
 
 // Returns an array of each features config
 const getFeaturesConfigs = async () => {
-  const CONFIGS_PATH = path.resolve(process.cwd(), 'configs')
+  const CONFIGS_PATH = resolve(process.cwd(), 'configs')
 
   if (!fs.existsSync(CONFIGS_PATH)) {
     return []
@@ -28,15 +28,15 @@ const run = async () => {
   Log.log('📝 Extends content is copied in your clipboard!')
   Log.log('Paste your entries in the extends params of nuxt.config.ts.')
   Log.log('Exemple: ')
-  Log.log(c.cyan(`export default defineNuxtConfig({
+  Log.log(colors.cyan(`export default defineNuxtConfig({
     extends:[
-${content}        
+      ${content}
     ]
   })`
   )
   )
 }
 
-module.exports = {
+export default {
   run
 }

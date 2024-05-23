@@ -1,26 +1,27 @@
-const c = require('ansi-colors')
+import colors from 'ansi-colors'
+const { orange, cyan, red, green, bold, bgWhite } = colors
 
 const SEPARATOR_CHARACTER = '-'
 
-const blankLine = _ => console.log()
+const blankLine = () => console.log()
 
 const separator = (n = 100) => console.log(SEPARATOR_CHARACTER.repeat(n))
 
-const warning = str => console.log(c.orange(str))
+const warning = str => console.log(orange(str))
 
-const info = str => console.log(c.cyan.underline(str))
+const info = str => console.log(cyan.underline(str))
 
-const error = str => console.log(c.red(str))
+const error = str => console.log(red(str))
 
-const success = str => console.log(c.green(str))
+const success = str => console.log(green(str))
 
 const log = str => console.log(str)
 
-const title = str => console.log(`${c.bold.underline(str)}\n`)
+const title = str => console.log(`${bold.underline(str)}\n`)
 
-const subtitle = str => console.log(`${c.bgWhite.black.bold(` ${str} `)}\n`)
+const subtitle = str => console.log(`${bgWhite.black.bold(` ${str} `)}\n`)
 
-module.exports = {
+export default {
   blankLine,
   separator,
   warning,
