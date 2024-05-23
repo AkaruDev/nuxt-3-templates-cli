@@ -67,7 +67,7 @@ const getFeatures = async () => {
 }
 
 const getDirectoryContent = async (directoryPath, branchName = 'master') => {
-  console.info(directoryPath)
+  const octokit = new Octokit({ auth: Config.token });
   const parseFileOrDir = fileOrDir => {
     const { name, download_url: downloadUrl, type, path } = fileOrDir
 
